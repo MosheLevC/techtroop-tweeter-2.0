@@ -1,7 +1,7 @@
 import { Button, Group, Text, Textarea } from "@mantine/core";
 import { useState } from "react";
 
-const TweetField = () => {
+const TweetField = ({ handleTweetSubmit }) => {
   const maxLength = 140;
   const [value, setValue] = useState("");
 
@@ -27,8 +27,16 @@ const TweetField = () => {
           </Text>
           <Button
             variant="filled"
-            disabled={value.length === 0 || value.length > maxLength}
-            onClick={() => {}}
+            disabled={!value.trim() || value.length > maxLength}
+            onClick={() => {
+              handleTweetSubmit({
+                id: crypto.randomUUID(),
+                content: value.trim(),
+                userName: "Mark",
+                date: new Date().toISOString(),
+              });
+              setValue("");
+            }}
           >
             Tweet
           </Button>
