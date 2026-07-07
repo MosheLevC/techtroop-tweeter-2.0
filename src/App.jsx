@@ -3,9 +3,7 @@ import { Alert, Center, Loader, Text } from "@mantine/core";
 import "./App.css";
 import TweetField from "./components/TweetField";
 import Tweet from "./components/Tweet";
-
-const API_URL = "https://njdihbyxnbavdjygtdep.supabase.co/rest/v1/Tweets";
-const API_KEY = "sb_publishable_fqIGoUk5BoNDCrYSnzRWxQ_f2a88xs1";
+import { fetchTweets, postTweet } from "./api";
 
 function App() {
   const [tweets, setTweets] = useState([]);
@@ -15,18 +13,7 @@ function App() {
 
   function getTweets() {
     setLoading(true);
-    fetch(`${API_URL}?select=*`, {
-      headers: {
-        apikey: API_KEY,
-        Authorization: `Bearer ${API_KEY}`,
-      },
-    })
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("Failed to load tweets from server");
-        }
-        return res.json();
-      })
+    fetchTweets()
       .then((data) => {
         const sortedTweets = data.sort((a, b) => new Date(b.date) - new Date(a.date));
         setTweets(sortedTweets);
@@ -46,23 +33,8 @@ function App() {
     setAdding(true);
     setError("");
 
-    fetch(API_URL, {
-      method: "POST",
-      headers: {
-        apikey: API_KEY,
-        Authorization: `Bearer ${API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        content: newTweet.content,
-        userName: newTweet.userName,
-        date: newTweet.date,
-      }),
-    })
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("Failed to add tweet to server");
-        }
+    postTweet(newTweet)
+      .then(() => {
         getTweets();
       })
       .catch((err) => {
