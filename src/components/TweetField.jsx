@@ -21,7 +21,7 @@ const TweetField = () => {
         },
       }}
       bottomSection={
-        <Group justify="space-between" style={{ width: "100%" }}>
+        <Group justify="space-between" flex={1}>
           <Text size="xs" c={value.length > maxLength ? "red" : "dimmed"}>
             {value.length}/{maxLength} characters
           </Text>
