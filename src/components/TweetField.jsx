@@ -1,7 +1,9 @@
+import { useContext, useState } from "react";
 import { Button, Group, Text, Textarea } from "@mantine/core";
-import { useState } from "react";
+import { TweetsContext } from "../context/TweetsContext";
 
-const TweetField = ({ handleTweetSubmit, username }) => {
+const TweetField = ({ username }) => {
+  const { createTweet } = useContext(TweetsContext);
   const maxLength = 140;
   const [value, setValue] = useState("");
 
@@ -29,7 +31,7 @@ const TweetField = ({ handleTweetSubmit, username }) => {
             variant="filled"
             disabled={!value.trim() || value.length > maxLength}
             onClick={() => {
-              handleTweetSubmit({
+              createTweet({
                 id: crypto.randomUUID(),
                 content: value.trim(),
                 userName: username,

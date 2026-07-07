@@ -1,55 +1,17 @@
-import { useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { Alert, Center, Loader, Text, Paper, Group, Button } from "@mantine/core";
 import "./App.css";
 import TweetField from "./components/TweetField";
 import Tweet from "./components/Tweet";
 import Profile from "./components/Profile";
-import { fetchTweets, postTweet } from "./api";
-import { sortTweets } from "./utils";
+import { TweetsContext } from "./context/TweetsContext";
 
 const App = () => {
-  const [tweets, setTweets] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [adding, setAdding] = useState(false);
-  const [error, setError] = useState("");
+  const { tweets, loading, adding, error } = useContext(TweetsContext);
   const [currentPage, setCurrentPage] = useState("home");
   const [username, setUsername] = useState(() => {
     return localStorage.getItem("username") || "Anonymous";
   });
-
-  const getTweets = () => {
-    setLoading(true);
-    fetchTweets()
-      .then((data) => {
-        const sortedTweets = sortTweets(data);
-        setTweets(sortedTweets);
-        setLoading(false);
-      })
-      .catch((err) => {
-        setError(err.message);
-        setLoading(false);
-      });
-  };
-
-  useEffect(() => {
-    getTweets();
-  }, []);
-
-  const handleTweetSubmit = (newTweet) => {
-    setAdding(true);
-    setError("");
-
-    postTweet(newTweet)
-      .then(() => {
-        getTweets();
-      })
-      .catch((err) => {
-        setError(err.message);
-      })
-      .finally(() => {
-        setAdding(false);
-      });
-  };
 
   const handleSaveUsername = (newUsername) => {
     setUsername(newUsername);
@@ -95,7 +57,7 @@ const App = () => {
                 <Text size="sm">Adding new tweet...</Text>
               </Center>
             ) : (
-              <TweetField handleTweetSubmit={handleTweetSubmit} username={username} />
+              <TweetField username={username} />
             )}
 
             <div className="tweet-container">
