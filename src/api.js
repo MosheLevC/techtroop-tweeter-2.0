@@ -6,7 +6,7 @@ const headers = {
   Authorization: `Bearer ${API_KEY}`,
 };
 
-export function fetchTweets() {
+export const fetchTweets = () => {
   return fetch(`${API_URL}?select=*`, { headers })
     .then((res) => {
       if (!res.ok) {
@@ -14,9 +14,9 @@ export function fetchTweets() {
       }
       return res.json();
     });
-}
+};
 
-export function postTweet(newTweet) {
+export const postTweet = (newTweet) => {
   return fetch(API_URL, {
     method: "POST",
     headers: {
@@ -34,4 +34,4 @@ export function postTweet(newTweet) {
     }
     return null;
   });
-}
+};

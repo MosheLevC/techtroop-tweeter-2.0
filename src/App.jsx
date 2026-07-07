@@ -6,13 +6,13 @@ import Tweet from "./components/Tweet";
 import { fetchTweets, postTweet } from "./api";
 import { sortTweets } from "./utils";
 
-function App() {
+const App = () => {
   const [tweets, setTweets] = useState([]);
   const [loading, setLoading] = useState(true);
   const [adding, setAdding] = useState(false);
   const [error, setError] = useState("");
 
-  function getTweets() {
+  const getTweets = () => {
     setLoading(true);
     fetchTweets()
       .then((data) => {
@@ -24,13 +24,13 @@ function App() {
         setError(err.message);
         setLoading(false);
       });
-  }
+  };
 
   useEffect(() => {
     getTweets();
   }, []);
 
-  function handleTweetSubmit(newTweet) {
+  const handleTweetSubmit = (newTweet) => {
     setAdding(true);
     setError("");
 
@@ -44,7 +44,7 @@ function App() {
       .finally(() => {
         setAdding(false);
       });
-  }
+  };
 
   return (
     <div className="container">
@@ -81,6 +81,6 @@ function App() {
       </div>
     </div>
   );
-}
+};
 
 export default App;
