@@ -4,6 +4,7 @@ import "./App.css";
 import TweetField from "./components/TweetField";
 import Tweet from "./components/Tweet";
 import { fetchTweets, postTweet } from "./api";
+import { sortTweets } from "./utils";
 
 function App() {
   const [tweets, setTweets] = useState([]);
@@ -15,7 +16,7 @@ function App() {
     setLoading(true);
     fetchTweets()
       .then((data) => {
-        const sortedTweets = data.sort((a, b) => new Date(b.date) - new Date(a.date));
+        const sortedTweets = sortTweets(data);
         setTweets(sortedTweets);
         setLoading(false);
       })
