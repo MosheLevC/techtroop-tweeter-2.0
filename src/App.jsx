@@ -62,11 +62,7 @@ const App = () => {
       <Paper
         withBorder
         p="md"
-        style={{
-          position: "sticky",
-          top: 0,
-          marginBottom: "20px",
-        }}
+        className="navbar"
       >
         <Group>
           <Button

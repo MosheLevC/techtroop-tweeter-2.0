@@ -12,7 +12,7 @@ const Profile = ({ currentUsername, onSave }) => {
   };
 
   return (
-    <Stack style={{ maxWidth: "400px", margin: "0 auto", marginTop: "40px" }} gap="md">
+    <Stack className="profile-container" gap="md">
       <Title order={2}>Profile</Title>
       <form onSubmit={handleSubmit}>
         <Stack gap="sm">
